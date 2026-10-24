@@ -84,11 +84,27 @@ const server = http.createServer((req, res) => {
   });
 });
 
-server.listen(PORT, '127.0.0.1', () => {
+let currentPort = Number(PORT);
+
+server.on('listening', () => {
+  const address = server.address();
+  const port = typeof address === 'string' ? address : address.port;
   console.log(`\n=================================================`);
   console.log(`⚡ Akshat's Portfolio Local Server is running!`);
-  console.log(`📡 URL: http://127.0.0.1:${PORT}`);
+  console.log(`📡 URL: http://127.0.0.1:${port}`);
   console.log(`📁 Serving directory: ${ROOT_DIR}`);
   console.log(`⌨️  Press Ctrl+C to stop.`);
   console.log(`=================================================\n`);
 });
+
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    currentPort++;
+    console.log(`⚠️  Port in use, trying ${currentPort}...`);
+    server.listen(currentPort, '127.0.0.1');
+  } else {
+    console.error('Server error:', err);
+  }
+});
+
+server.listen(currentPort, '127.0.0.1');

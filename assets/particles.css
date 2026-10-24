@@ -1,0 +1,32 @@
+/* particles.css - Ambient WebGL2 Particle Background */
+.particles-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  height: 100lvh;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particles-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Ensure content and interactive elements remain elevated above the background canvas */
+header,
+main,
+footer,
+#page,
+.sheet-frame,
+.coord-readout {
+  position: relative;
+  z-index: 1;
+}
